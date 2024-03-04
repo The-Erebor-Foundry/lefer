@@ -12,6 +12,17 @@ namespace lefer {
 
 // Main APIs of the library ================================================================
 
+
+/** Draw a curve in the flow field.
+ * @param curve_id
+ * @param x_start
+ * @param y_start
+ * @param n_steps
+ * @param step_length
+ * @param d_sep
+ * @param flow_field
+ * @param density_grid
+*/
 Curve draw_curve(int curve_id,
 		 double x_start,
 		 double y_start,

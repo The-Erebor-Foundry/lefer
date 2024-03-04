@@ -1,0 +1,40 @@
+\hypertarget{lefer_8hpp}{}\doxysection{src/lefer.hpp File Reference}
+\label{lefer_8hpp}\index{src/lefer.hpp@{src/lefer.hpp}}
+{\ttfamily \#include $<$vector$>$}\newline
+Include dependency graph for lefer.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classlefer_1_1FlowField}{lefer\+::\+Flow\+Field}}
+\item 
+struct \mbox{\hyperlink{structlefer_1_1Point}{lefer\+::\+Point}}
+\item 
+class \mbox{\hyperlink{classlefer_1_1Curve}{lefer\+::\+Curve}}
+\item 
+struct \mbox{\hyperlink{structlefer_1_1DensityCell}{lefer\+::\+Density\+Cell}}
+\item 
+class \mbox{\hyperlink{classlefer_1_1DensityGrid}{lefer\+::\+Density\+Grid}}
+\item 
+class \mbox{\hyperlink{classlefer_1_1SeedPointsQueue}{lefer\+::\+Seed\+Points\+Queue}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacelefer}{lefer}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{namespacelefer_a2419dbf7f8ca98df04f57e3e467b686b}{lefer\+::distance}} (double x1, double y1, double x2, double y2)
+\item 
+Seed\+Points\+Queue \mbox{\hyperlink{namespacelefer_a7c1b5d34474964cf1b08e106ab071205}{lefer\+::collect\+\_\+seedpoints}} (Curve $\ast$curve, double d\+\_\+sep)
+\item 
+Curve \mbox{\hyperlink{namespacelefer_a8b4869bd79091f3db49ed509dc556bdd}{lefer\+::draw\+\_\+curve}} (int curve\+\_\+id, double x\+\_\+start, double y\+\_\+start, int n\+\_\+steps, double step\+\_\+length, double d\+\_\+sep, Flow\+Field $\ast$flow\+\_\+field, Density\+Grid $\ast$density\+\_\+grid)
+\item 
+std\+::vector$<$ Curve $>$ \mbox{\hyperlink{namespacelefer_aea61e23cac090b41eedfb4b4b483631b}{lefer\+::even\+\_\+spaced\+\_\+curves}} (double x\+\_\+start, double y\+\_\+start, int n\+\_\+curves, int n\+\_\+steps, int min\+\_\+steps\+\_\+allowed, double step\+\_\+length, double d\+\_\+sep, Flow\+Field $\ast$flow\+\_\+field, Density\+Grid $\ast$density\+\_\+grid)
+\item 
+std\+::vector$<$ Curve $>$ \mbox{\hyperlink{namespacelefer_ab061cf97ccaa1b5105ac39aa2e44073a}{lefer\+::non\+\_\+overlapping\+\_\+curves}} (std\+::vector$<$ Point $>$ starting\+\_\+points, int n\+\_\+steps, int min\+\_\+steps\+\_\+allowed, double step\+\_\+length, double d\+\_\+sep, Flow\+Field $\ast$flow\+\_\+field, Density\+Grid $\ast$density\+\_\+grid)
+\end{DoxyCompactItemize}

@@ -1,0 +1,82 @@
+\hypertarget{namespacelefer}{}\doxysection{lefer Namespace Reference}
+\label{namespacelefer}\index{lefer@{lefer}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classlefer_1_1FlowField}{Flow\+Field}}
+\item 
+struct \mbox{\hyperlink{structlefer_1_1Point}{Point}}
+\item 
+class \mbox{\hyperlink{classlefer_1_1Curve}{Curve}}
+\item 
+struct \mbox{\hyperlink{structlefer_1_1DensityCell}{Density\+Cell}}
+\item 
+class \mbox{\hyperlink{classlefer_1_1DensityGrid}{Density\+Grid}}
+\item 
+class \mbox{\hyperlink{classlefer_1_1SeedPointsQueue}{Seed\+Points\+Queue}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{namespacelefer_a2419dbf7f8ca98df04f57e3e467b686b}{distance}} (double x1, double y1, double x2, double y2)
+\item 
+\mbox{\hyperlink{classlefer_1_1SeedPointsQueue}{Seed\+Points\+Queue}} \mbox{\hyperlink{namespacelefer_a7c1b5d34474964cf1b08e106ab071205}{collect\+\_\+seedpoints}} (\mbox{\hyperlink{classlefer_1_1Curve}{Curve}} $\ast$curve, double d\+\_\+sep)
+\item 
+\mbox{\hyperlink{classlefer_1_1Curve}{Curve}} \mbox{\hyperlink{namespacelefer_a8b4869bd79091f3db49ed509dc556bdd}{draw\+\_\+curve}} (int curve\+\_\+id, double x\+\_\+start, double y\+\_\+start, int n\+\_\+steps, double step\+\_\+length, double d\+\_\+sep, \mbox{\hyperlink{classlefer_1_1FlowField}{Flow\+Field}} $\ast$flow\+\_\+field, \mbox{\hyperlink{classlefer_1_1DensityGrid}{Density\+Grid}} $\ast$density\+\_\+grid)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classlefer_1_1Curve}{Curve}} $>$ \mbox{\hyperlink{namespacelefer_aea61e23cac090b41eedfb4b4b483631b}{even\+\_\+spaced\+\_\+curves}} (double x\+\_\+start, double y\+\_\+start, int n\+\_\+curves, int n\+\_\+steps, int min\+\_\+steps\+\_\+allowed, double step\+\_\+length, double d\+\_\+sep, \mbox{\hyperlink{classlefer_1_1FlowField}{Flow\+Field}} $\ast$flow\+\_\+field, \mbox{\hyperlink{classlefer_1_1DensityGrid}{Density\+Grid}} $\ast$density\+\_\+grid)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classlefer_1_1Curve}{Curve}} $>$ \mbox{\hyperlink{namespacelefer_ab061cf97ccaa1b5105ac39aa2e44073a}{non\+\_\+overlapping\+\_\+curves}} (std\+::vector$<$ \mbox{\hyperlink{structlefer_1_1Point}{Point}} $>$ starting\+\_\+points, int n\+\_\+steps, int min\+\_\+steps\+\_\+allowed, double step\+\_\+length, double d\+\_\+sep, \mbox{\hyperlink{classlefer_1_1FlowField}{Flow\+Field}} $\ast$flow\+\_\+field, \mbox{\hyperlink{classlefer_1_1DensityGrid}{Density\+Grid}} $\ast$density\+\_\+grid)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacelefer_a7c1b5d34474964cf1b08e106ab071205}\label{namespacelefer_a7c1b5d34474964cf1b08e106ab071205}} 
+\index{lefer@{lefer}!collect\_seedpoints@{collect\_seedpoints}}
+\index{collect\_seedpoints@{collect\_seedpoints}!lefer@{lefer}}
+\doxysubsubsection{\texorpdfstring{collect\_seedpoints()}{collect\_seedpoints()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classlefer_1_1SeedPointsQueue}{Seed\+Points\+Queue}} lefer\+::collect\+\_\+seedpoints (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classlefer_1_1Curve}{Curve}} $\ast$}]{curve,  }\item[{double}]{d\+\_\+sep }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{namespacelefer_a2419dbf7f8ca98df04f57e3e467b686b}\label{namespacelefer_a2419dbf7f8ca98df04f57e3e467b686b}} 
+\index{lefer@{lefer}!distance@{distance}}
+\index{distance@{distance}!lefer@{lefer}}
+\doxysubsubsection{\texorpdfstring{distance()}{distance()}}
+{\footnotesize\ttfamily double lefer\+::distance (\begin{DoxyParamCaption}\item[{double}]{x1,  }\item[{double}]{y1,  }\item[{double}]{x2,  }\item[{double}]{y2 }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{namespacelefer_a8b4869bd79091f3db49ed509dc556bdd}\label{namespacelefer_a8b4869bd79091f3db49ed509dc556bdd}} 
+\index{lefer@{lefer}!draw\_curve@{draw\_curve}}
+\index{draw\_curve@{draw\_curve}!lefer@{lefer}}
+\doxysubsubsection{\texorpdfstring{draw\_curve()}{draw\_curve()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classlefer_1_1Curve}{Curve}} lefer\+::draw\+\_\+curve (\begin{DoxyParamCaption}\item[{int}]{curve\+\_\+id,  }\item[{double}]{x\+\_\+start,  }\item[{double}]{y\+\_\+start,  }\item[{int}]{n\+\_\+steps,  }\item[{double}]{step\+\_\+length,  }\item[{double}]{d\+\_\+sep,  }\item[{\mbox{\hyperlink{classlefer_1_1FlowField}{Flow\+Field}} $\ast$}]{flow\+\_\+field,  }\item[{\mbox{\hyperlink{classlefer_1_1DensityGrid}{Density\+Grid}} $\ast$}]{density\+\_\+grid }\end{DoxyParamCaption})}
+
+Draw a curve in the flow field. 
+\begin{DoxyParams}{Parameters}
+{\em curve\+\_\+id} & \\
+\hline
+{\em x\+\_\+start} & \\
+\hline
+{\em y\+\_\+start} & \\
+\hline
+{\em n\+\_\+steps} & \\
+\hline
+{\em step\+\_\+length} & \\
+\hline
+{\em d\+\_\+sep} & \\
+\hline
+{\em flow\+\_\+field} & \\
+\hline
+{\em density\+\_\+grid} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacelefer_aea61e23cac090b41eedfb4b4b483631b}\label{namespacelefer_aea61e23cac090b41eedfb4b4b483631b}} 
+\index{lefer@{lefer}!even\_spaced\_curves@{even\_spaced\_curves}}
+\index{even\_spaced\_curves@{even\_spaced\_curves}!lefer@{lefer}}
+\doxysubsubsection{\texorpdfstring{even\_spaced\_curves()}{even\_spaced\_curves()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classlefer_1_1Curve}{Curve}} $>$ lefer\+::even\+\_\+spaced\+\_\+curves (\begin{DoxyParamCaption}\item[{double}]{x\+\_\+start,  }\item[{double}]{y\+\_\+start,  }\item[{int}]{n\+\_\+curves,  }\item[{int}]{n\+\_\+steps,  }\item[{int}]{min\+\_\+steps\+\_\+allowed,  }\item[{double}]{step\+\_\+length,  }\item[{double}]{d\+\_\+sep,  }\item[{\mbox{\hyperlink{classlefer_1_1FlowField}{Flow\+Field}} $\ast$}]{flow\+\_\+field,  }\item[{\mbox{\hyperlink{classlefer_1_1DensityGrid}{Density\+Grid}} $\ast$}]{density\+\_\+grid }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{namespacelefer_ab061cf97ccaa1b5105ac39aa2e44073a}\label{namespacelefer_ab061cf97ccaa1b5105ac39aa2e44073a}} 
+\index{lefer@{lefer}!non\_overlapping\_curves@{non\_overlapping\_curves}}
+\index{non\_overlapping\_curves@{non\_overlapping\_curves}!lefer@{lefer}}
+\doxysubsubsection{\texorpdfstring{non\_overlapping\_curves()}{non\_overlapping\_curves()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classlefer_1_1Curve}{Curve}} $>$ lefer\+::non\+\_\+overlapping\+\_\+curves (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{structlefer_1_1Point}{Point}} $>$}]{starting\+\_\+points,  }\item[{int}]{n\+\_\+steps,  }\item[{int}]{min\+\_\+steps\+\_\+allowed,  }\item[{double}]{step\+\_\+length,  }\item[{double}]{d\+\_\+sep,  }\item[{\mbox{\hyperlink{classlefer_1_1FlowField}{Flow\+Field}} $\ast$}]{flow\+\_\+field,  }\item[{\mbox{\hyperlink{classlefer_1_1DensityGrid}{Density\+Grid}} $\ast$}]{density\+\_\+grid }\end{DoxyParamCaption})}
+
