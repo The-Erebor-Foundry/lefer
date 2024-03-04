@@ -15,8 +15,8 @@ double distance (double x1, double y1, double x2, double y2) {
 }
 
 
-static int _array_index_as_1d(int x, int y, int array_width) {
-	return x + array_width * y;
+static int _grid_index_as_1d(int x, int y, int grid_width) {
+	return x + grid_width * y;
 }
 
 
@@ -88,22 +88,24 @@ struct DensityCell {
 
 class DensityGrid {
 private:
-	DensityCell _grid[DENSITY_GRID_WIDTH][DENSITY_GRID_HEIGHT];
+	std::vector<DensityCell> _grid;
 	int _width;
 	int _height;
+	int _n_elements;
 	double _d_sep;
 public:
-	DensityGrid(double d_sep, int cell_capacity) {
+	DensityGrid(int grid_width, int grid_height, double d_sep, int cell_capacity) {
 		_d_sep = d_sep;
-		_width = DENSITY_GRID_WIDTH;
-		_height = DENSITY_GRID_HEIGHT;
-		for (int r = 0; r < _height; r++) {
-			for (int c = 0; c < _width; c++) {
-				_grid[c][r].x.reserve(cell_capacity);
-				_grid[c][r].y.reserve(cell_capacity);
-				_grid[c][r].capacity = cell_capacity;
-				_grid[c][r].space_used = 0;
-			}
+		_width = grid_width;
+		_height = grid_height;
+		_n_elements = grid_width * grid_height;
+		_grid.reserve(grid_width * grid_height);
+
+		for (int i = 0; i < _n_elements; i++) {
+			_grid[i].x.reserve(cell_capacity);
+			_grid[i].y.reserve(cell_capacity);
+			_grid[i].capacity = cell_capacity;
+			_grid[i].space_used = 0;
 		}
 	}
 
@@ -115,6 +117,16 @@ public:
 	int get_density_row (double y) {
 		double r = (y / _d_sep);
 		return (int) r;
+	}
+
+	int get_density_index (double x, double y) {
+		int col = get_density_col(x);
+		int row = get_density_row(y);
+		return col + _width * row;
+	}
+	
+	int get_density_index (int col, int row) {
+		return col + _width * row;
 	}
 
 	bool off_boundaries(double x, double y) {
@@ -133,16 +145,14 @@ public:
 			return;
 		}
 
-		int density_col = get_density_col(x);
-		int density_row = get_density_row(y);
-
-		int space_used = _grid[density_col][density_row].space_used;
-		int capacity = _grid[density_col][density_row].capacity;
+		int density_index = get_density_index(x, y);
+		int space_used = _grid[density_index].space_used;
+		int capacity = _grid[density_index].capacity;
 
 		if ((space_used + 1) < capacity) {
-			_grid[density_col][density_row].x.emplace_back(x);
-			_grid[density_col][density_row].y.emplace_back(y);
-			_grid[density_col][density_row].space_used++;
+			_grid[density_index].x.emplace_back(x);
+			_grid[density_index].y.emplace_back(y);
+			_grid[density_index].space_used++;
 		} else {
 			std::cout << "[ERROR]: Attempt to add coordinate in density cell that is out of capacity!" << std::endl;
 		}
@@ -162,7 +172,6 @@ public:
 
 		int density_col = get_density_col(x);
 		int density_row = get_density_row(y);
-
 		int start_row = (density_row - 1) > 0 ? density_row - 1 : 0;
 		int end_row = (density_row + 1) < _width ? density_row + 1 : density_row; 
 		int start_col = (density_col - 1) > 0 ? density_col - 1 : 0;
@@ -173,15 +182,16 @@ public:
 		double d_test = _d_sep - (0.01 * _d_sep);
 		for (int c = start_col; c <= end_col; c++) {
 			for (int r = start_row; r <= end_row; r++) {
-				int n_elements = _grid[c][r].space_used;
+				int density_index = get_density_index(c, r);
+				int n_elements = _grid[density_index].space_used;
 				if (n_elements == 0) {
 					continue;
 				}
 
 				for (int i = 0; i < n_elements; i++) {
-					double x2 = _grid[c][r].x.at(i);
-					double y2 = _grid[c][r].y.at(i);
-				double dist = distance(x, y, x2, y2);
+					double x2 = _grid[density_index].x.at(i);
+					double y2 = _grid[density_index].y.at(i);
+					double dist = distance(x, y, x2, y2);
 					if (dist <= d_test) {
 						return 0;
 					}
@@ -225,7 +235,7 @@ public:
 
 
 
-SeedPointsQueue collect_seedpoints (Curve* curve) {
+SeedPointsQueue collect_seedpoints (Curve* curve, double d_sep) {
 	int steps_taken = curve->_steps_taken;
 	SeedPointsQueue queue = SeedPointsQueue(steps_taken);
 	if (steps_taken == 0) {
@@ -244,12 +254,12 @@ SeedPointsQueue collect_seedpoints (Curve* curve) {
 		double angle_right = angle - (M_PI / 2);
 
 		Point left_point = {
-			x + (D_SEP * cos(angle_left)),
-			y + (D_SEP * sin(angle_left))
+			x + (d_sep * cos(angle_left)),
+			y + (d_sep * sin(angle_left))
 		};
 		Point right_point = {
-			x + (D_SEP * cos(angle_right)),
-			y + (D_SEP * sin(angle_right))
+			x + (d_sep * cos(angle_right)),
+			y + (d_sep * sin(angle_right))
 		};
 
 		queue.insert_point(left_point);	
@@ -268,7 +278,7 @@ Curve draw_curve(int curve_id,
 		 int n_steps,
 		 double step_length,
 		 double d_sep,
-		 double** _flow_field,
+		 double** flow_field,
 		 DensityGrid* density_grid) {
 
 	Curve curve = Curve(curve_id, n_steps);
@@ -278,7 +288,7 @@ Curve draw_curve(int curve_id,
 	int i = 1;
 	// Draw curve from right to left
 	while (i < (n_steps / 2)) {
-		if (flow_field->off_boundaries(x, y)) {
+		if (_off_boundaries(x, y, flow_field_width)) {
 			break;
 		}
 
@@ -300,7 +310,7 @@ Curve draw_curve(int curve_id,
 	y = y_start;
 	// Draw curve from left to right
 	while (i < n_steps) {
-		if (flow_field->off_boundaries(x, y)) {
+		if (_off_boundaries(flow_field, x, y)) {
 			break;
 		}
 
@@ -329,15 +339,11 @@ std::vector<Curve> even_spaced_curves(double x_start,
 				      int min_steps_allowed,
 				      double step_length,
 				      double d_sep,
-				      FlowField* flow_field,
+				      double** flow_field,
 				      DensityGrid* density_grid) {
 
 	std::vector<Curve> curves;
 	curves.reserve(n_curves);
-	/*for (int curve_id = 0; curve_id < n_curves; curve_id++) {
-		curves[curve_id] = Curve(curve_id, n_steps);
-	}*/
-
 	double x = x_start;
 	double y = y_start;
 	int curve_array_index = 0;
@@ -363,7 +369,7 @@ std::vector<Curve> even_spaced_curves(double x_start,
 			// There is no more curves to be analyzed in the queue
 			break;
 		}
-		queue = collect_seedpoints(&curves.at(curve_id));
+		queue = collect_seedpoints(&curves.at(curve_id), d_sep);
 		for (Point p: queue._points) {
 			// check if it is valid given the current state
 			if (density_grid->is_valid_next_step(p.x, p.y)) {
@@ -397,25 +403,6 @@ std::vector<Curve> even_spaced_curves(double x_start,
 	return curves;
 }
 
-
-
-
-int main() {
-	FlowField flow_field = FlowField();
-	DensityGrid density_grid = DensityGrid(D_SEP, 5000);
-	std::vector<Curve> curves = even_spaced_curves(
-		45.0, 24.0,
-		N_CURVES,
-		N_STEPS,
-		MIN_STEPS_ALLOWED,
-		STEP_LENGTH,
-		D_SEP,
-		&flow_field,
-		&density_grid
-	);
-
-	return 1;
-}
 
 
 
