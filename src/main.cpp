@@ -508,23 +508,4 @@ SeedPointsQueue collect_seedpoints (Curve* curve, double d_sep) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 } // namespace lefer

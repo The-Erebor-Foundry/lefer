@@ -4,4 +4,5 @@ CMakeCache.txt
 *.a
 *.lib
 Makefile
+examples1
 
