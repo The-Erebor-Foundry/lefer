@@ -19,30 +19,44 @@ static int _grid_index_as_1d(int x, int y, int grid_width) {
 	return x + grid_width * y;
 }
 
+class FlowField {
+private:
+	double** _flow_field;
+	int _field_width;
+public:
+	FlowField(double** flow_field, int field_width) {
+		_flow_field = flow_field;
+		_field_width = field_width;
+	}
 
-static int _get_flow_field_col(double x) {
-	return (int) x;
-}
+	int get_field_width() {
+		return _field_width;
+	}
 
-static int _get_flow_field_row(double y) {
-	return (int) y;
-}
+	int get_flow_field_col(double x) {
+		return (int) x;
+	}
 
-static bool _off_boundaries(double x, double y, int limit) {
-	return (
-	x <= 0 ||
-	y <= 0 ||
-	x >= limit ||
-	y >= limit 
-	);
-}
+	int get_flow_field_row(double y) {
+		return (int) y;
+	}
 
-static double get_angle(double** _flow_field, double x, double y) {
-	int xi = _get_flow_field_col(x);
-	int yi = _get_flow_field_row(y);
-	return _flow_field[xi][yi];
-}
+	bool off_boundaries(double x, double y) {
+		return (
+		x <= 0 ||
+		y <= 0 ||
+		x >= _field_width ||
+		y >= _field_width
+		);
+	}
 
+
+	double get_angle(double x, double y) {
+		int xi = get_flow_field_col(x);
+		int yi = get_flow_field_row(y);
+		return _flow_field[xi][yi];
+	}
+};
 
 struct Point {
 	double x;
@@ -278,7 +292,7 @@ Curve draw_curve(int curve_id,
 		 int n_steps,
 		 double step_length,
 		 double d_sep,
-		 double** flow_field,
+		 FlowField* flow_field,
 		 DensityGrid* density_grid) {
 
 	Curve curve = Curve(curve_id, n_steps);
@@ -288,7 +302,7 @@ Curve draw_curve(int curve_id,
 	int i = 1;
 	// Draw curve from right to left
 	while (i < (n_steps / 2)) {
-		if (_off_boundaries(x, y, flow_field_width)) {
+		if (flow_field->off_boundaries(x, y)) {
 			break;
 		}
 
@@ -310,7 +324,7 @@ Curve draw_curve(int curve_id,
 	y = y_start;
 	// Draw curve from left to right
 	while (i < n_steps) {
-		if (_off_boundaries(flow_field, x, y)) {
+		if (flow_field->off_boundaries(x, y)) {
 			break;
 		}
 
@@ -339,7 +353,7 @@ std::vector<Curve> even_spaced_curves(double x_start,
 				      int min_steps_allowed,
 				      double step_length,
 				      double d_sep,
-				      double** flow_field,
+				      FlowField* flow_field,
 				      DensityGrid* density_grid) {
 
 	std::vector<Curve> curves;
@@ -404,6 +418,47 @@ std::vector<Curve> even_spaced_curves(double x_start,
 }
 
 
+std::vector<Curve> non_overlapping_curves(std::vector<Point> starting_points,
+				      int n_steps,
+				      int min_steps_allowed,
+				      double step_length,
+				      double d_sep,
+				      FlowField* flow_field,
+				      DensityGrid* density_grid) {
+
+		std::vector<Curve> curves;
+		curves.reserve(starting_points.size());
+		int curve_id = 0;
+		for (Point start_point: starting_points) {
+			double x_start = start_point.x;
+			double y_start = start_point.y;
+			// Check if this starting point is valid given the current state
+			if (density_grid->is_valid_next_step(x_start, y_start)) {
+				// if it is, draw the curve from it
+				Curve curve = draw_curve(
+					curve_id,
+					x_start, y_start,
+					n_steps,
+					step_length,
+					d_sep,
+					flow_field,
+					density_grid
+				);
+
+				if (curve._steps_taken < min_steps_allowed) {
+					continue;
+				}
+
+				curves.emplace_back(curve);
+				// insert this new curve into the density grid
+				density_grid->insert_curve_coords(&curve);
+				curve_id++;
+			}
+		}
+
+
+		return curves;
+	}
 
 
 } // namespace lefer
