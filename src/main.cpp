@@ -321,7 +321,9 @@ void Curve::insert_step(double x_coord, double y_coord, int direction_id) {
 
 // DensityGrid class ============================================================================
 
-DensityGrid::DensityGrid(int grid_width, int grid_height, double d_sep, int cell_capacity) {
+DensityGrid::DensityGrid(int flow_field_width, int flow_field_height, double d_sep, int cell_capacity) {
+	int grid_width = (int)(flow_field_width / d_sep);
+	int grid_height = (int)(flow_field_height / d_sep);
 	_d_sep = d_sep;
 	_width = grid_width;
 	_height = grid_height;

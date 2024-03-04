@@ -56,7 +56,7 @@ private:
 	int _n_elements;
 	double _d_sep;
 public:
-	DensityGrid(int grid_width, int grid_height, double d_sep, int cell_capacity);
+	DensityGrid(int flow_field_width, int flow_field_height, double d_sep, int cell_capacity);
 	int get_density_col (double x);
 	int get_density_row (double y);
 	int get_density_index (double x, double y);
