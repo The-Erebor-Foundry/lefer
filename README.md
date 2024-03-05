@@ -46,7 +46,7 @@ was drawn into the flow field.
 
 # A minimal example
 
-The complete example can be found inside the `examples` directory of this repository.
+The complete example can be found inside the [`examples`](https://github.com/The-Erebor-Foundry/lefer/tree/main/examples) directory of this repository.
 But just as a minimal example.
 
 ```cpp
