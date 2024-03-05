@@ -28,6 +28,19 @@ double \mbox{\hyperlink{classlefer_1_1FlowField_a0efb515967d71fa1256678dc7ba5250
 \doxysubsubsection{\texorpdfstring{FlowField()}{FlowField()}}
 {\footnotesize\ttfamily lefer\+::\+Flow\+Field\+::\+Flow\+Field (\begin{DoxyParamCaption}\item[{double $\ast$$\ast$}]{flow\+\_\+field,  }\item[{int}]{field\+\_\+width }\end{DoxyParamCaption})}
 
+The constructor for \mbox{\hyperlink{classlefer_1_1FlowField}{Flow\+Field}} class.
+
+This constructor builds a wrapper object around a 2D grid of double values. i.\+e. a 2D array of double values. This 2D array of double values must be a heap-\/based (i.\+e. dinamically allocated) array.
+
+Very important, this grid must be a square, meaning that, the height and width of the field must be the same.
+
+
+\begin{DoxyParams}{Parameters}
+{\em flowfield} & the 2D array of double values that defines the flow field. \\
+\hline
+{\em field\+\_\+width} & the width of the field. \\
+\hline
+\end{DoxyParams}
 
 
 \doxysubsection{Member Function Documentation}

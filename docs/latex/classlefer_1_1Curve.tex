@@ -28,6 +28,9 @@ int \mbox{\hyperlink{classlefer_1_1Curve_a8b7a19e473131a8dd31df98a489d4378}{\+\_
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+A class that represents a curve 
+
 \doxysubsection{Constructor \& Destructor Documentation}
 \mbox{\Hypertarget{classlefer_1_1Curve_af2e113e31d8adcee85bf223a00195d84}\label{classlefer_1_1Curve_af2e113e31d8adcee85bf223a00195d84}} 
 \index{lefer::Curve@{lefer::Curve}!Curve@{Curve}}
@@ -35,6 +38,19 @@ int \mbox{\hyperlink{classlefer_1_1Curve_a8b7a19e473131a8dd31df98a489d4378}{\+\_
 \doxysubsubsection{\texorpdfstring{Curve()}{Curve()}}
 {\footnotesize\ttfamily lefer\+::\+Curve\+::\+Curve (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{int}]{n\+\_\+steps }\end{DoxyParamCaption})}
 
+The number of steps taken to draw the curve.
+
+The constructor for a \mbox{\hyperlink{classlefer_1_1Curve}{Curve}} object
+
+This constructor returns a empty \mbox{\hyperlink{classlefer_1_1Curve}{Curve}} object, that you can use to store the coordinates and information about a specific curve you want to drawn into the field.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & the id you want to give to this \mbox{\hyperlink{classlefer_1_1Curve}{Curve}} object. \\
+\hline
+{\em n\+\_\+steps} & the number of steps you will use to draw this curve. \\
+\hline
+\end{DoxyParams}
 
 
 \doxysubsection{Member Function Documentation}
@@ -53,25 +69,25 @@ int \mbox{\hyperlink{classlefer_1_1Curve_a8b7a19e473131a8dd31df98a489d4378}{\+\_
 \doxysubsubsection{\texorpdfstring{\_curve\_id}{\_curve\_id}}
 {\footnotesize\ttfamily int lefer\+::\+Curve\+::\+\_\+curve\+\_\+id}
 
-\mbox{\Hypertarget{classlefer_1_1Curve_ac75351f05cb2f5bb15f664f65ee1a2f2}\label{classlefer_1_1Curve_ac75351f05cb2f5bb15f664f65ee1a2f2}} 
+The id that identifies the curve \mbox{\Hypertarget{classlefer_1_1Curve_ac75351f05cb2f5bb15f664f65ee1a2f2}\label{classlefer_1_1Curve_ac75351f05cb2f5bb15f664f65ee1a2f2}} 
 \index{lefer::Curve@{lefer::Curve}!\_direction@{\_direction}}
 \index{\_direction@{\_direction}!lefer::Curve@{lefer::Curve}}
 \doxysubsubsection{\texorpdfstring{\_direction}{\_direction}}
 {\footnotesize\ttfamily std\+::vector$<$int$>$ lefer\+::\+Curve\+::\+\_\+direction}
 
-\mbox{\Hypertarget{classlefer_1_1Curve_a87e39530ddf9212d577de3cee590badd}\label{classlefer_1_1Curve_a87e39530ddf9212d577de3cee590badd}} 
+The y coordinates of each point in the curve \mbox{\Hypertarget{classlefer_1_1Curve_a87e39530ddf9212d577de3cee590badd}\label{classlefer_1_1Curve_a87e39530ddf9212d577de3cee590badd}} 
 \index{lefer::Curve@{lefer::Curve}!\_step\_id@{\_step\_id}}
 \index{\_step\_id@{\_step\_id}!lefer::Curve@{lefer::Curve}}
 \doxysubsubsection{\texorpdfstring{\_step\_id}{\_step\_id}}
 {\footnotesize\ttfamily std\+::vector$<$int$>$ lefer\+::\+Curve\+::\+\_\+step\+\_\+id}
 
-\mbox{\Hypertarget{classlefer_1_1Curve_a8b7a19e473131a8dd31df98a489d4378}\label{classlefer_1_1Curve_a8b7a19e473131a8dd31df98a489d4378}} 
+The direction id of each point in the curve (0 means direction from left to right, 1 means direction from right to left) \mbox{\Hypertarget{classlefer_1_1Curve_a8b7a19e473131a8dd31df98a489d4378}\label{classlefer_1_1Curve_a8b7a19e473131a8dd31df98a489d4378}} 
 \index{lefer::Curve@{lefer::Curve}!\_steps\_taken@{\_steps\_taken}}
 \index{\_steps\_taken@{\_steps\_taken}!lefer::Curve@{lefer::Curve}}
 \doxysubsubsection{\texorpdfstring{\_steps\_taken}{\_steps\_taken}}
 {\footnotesize\ttfamily int lefer\+::\+Curve\+::\+\_\+steps\+\_\+taken}
 
-\mbox{\Hypertarget{classlefer_1_1Curve_a02e7315ed098ccc1d846c1c93e61f344}\label{classlefer_1_1Curve_a02e7315ed098ccc1d846c1c93e61f344}} 
+The id (or the number) of the step for each point in the curve \mbox{\Hypertarget{classlefer_1_1Curve_a02e7315ed098ccc1d846c1c93e61f344}\label{classlefer_1_1Curve_a02e7315ed098ccc1d846c1c93e61f344}} 
 \index{lefer::Curve@{lefer::Curve}!\_x@{\_x}}
 \index{\_x@{\_x}!lefer::Curve@{lefer::Curve}}
 \doxysubsubsection{\texorpdfstring{\_x}{\_x}}
@@ -83,7 +99,7 @@ int \mbox{\hyperlink{classlefer_1_1Curve_a8b7a19e473131a8dd31df98a489d4378}{\+\_
 \doxysubsubsection{\texorpdfstring{\_y}{\_y}}
 {\footnotesize\ttfamily std\+::vector$<$double$>$ lefer\+::\+Curve\+::\+\_\+y}
 
-
+The x coordinates of each point in the curve 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

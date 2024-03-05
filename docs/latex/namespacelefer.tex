@@ -43,29 +43,48 @@ std\+::vector$<$ \mbox{\hyperlink{classlefer_1_1Curve}{Curve}} $>$ \mbox{\hyperl
 \doxysubsubsection{\texorpdfstring{distance()}{distance()}}
 {\footnotesize\ttfamily double lefer\+::distance (\begin{DoxyParamCaption}\item[{double}]{x1,  }\item[{double}]{y1,  }\item[{double}]{x2,  }\item[{double}]{y2 }\end{DoxyParamCaption})}
 
+Calculate the distance between two points
+
+
+\begin{DoxyParams}{Parameters}
+{\em x1} & the x coordinate of point 1. \\
+\hline
+{\em y1} & the y coordinate of point 1. \\
+\hline
+{\em x2} & the x coordinate of point 2. \\
+\hline
+{\em y2} & the y coordinate of point 2. \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{namespacelefer_a8b4869bd79091f3db49ed509dc556bdd}\label{namespacelefer_a8b4869bd79091f3db49ed509dc556bdd}} 
 \index{lefer@{lefer}!draw\_curve@{draw\_curve}}
 \index{draw\_curve@{draw\_curve}!lefer@{lefer}}
 \doxysubsubsection{\texorpdfstring{draw\_curve()}{draw\_curve()}}
 {\footnotesize\ttfamily \mbox{\hyperlink{classlefer_1_1Curve}{Curve}} lefer\+::draw\+\_\+curve (\begin{DoxyParamCaption}\item[{int}]{curve\+\_\+id,  }\item[{double}]{x\+\_\+start,  }\item[{double}]{y\+\_\+start,  }\item[{int}]{n\+\_\+steps,  }\item[{double}]{step\+\_\+length,  }\item[{double}]{d\+\_\+sep,  }\item[{\mbox{\hyperlink{classlefer_1_1FlowField}{Flow\+Field}} $\ast$}]{flow\+\_\+field,  }\item[{\mbox{\hyperlink{classlefer_1_1DensityGrid}{Density\+Grid}} $\ast$}]{density\+\_\+grid }\end{DoxyParamCaption})}
 
-Draw a curve in the flow field. 
+Draw a curve in the flow field.
+
+This function draws a curve in the flow field by starting in a specific point in the field ({\ttfamily x\+\_\+start} and {\ttfamily y\+\_\+start}), and then, it starts to walk through the field, by followinf the direction of the angles it encounters in the field.
+
+For more details check\+: \href{https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/en/}{\texttt{ https\+://pedro-\/faria.\+netlify.\+app/posts/2024/2024-\/02-\/19-\/flow-\/even/en/}}
+
+
 \begin{DoxyParams}{Parameters}
-{\em curve\+\_\+id} & \\
+{\em curve\+\_\+id} & the id of the curve you want to draw. \\
 \hline
-{\em x\+\_\+start} & \\
+{\em x\+\_\+start} & the x coordinate of the starting point from which the function will start to draw your curve. \\
 \hline
-{\em y\+\_\+start} & \\
+{\em y\+\_\+start} & the y coordinate of the starting point from which the function will start to draw your curve. \\
 \hline
-{\em n\+\_\+steps} & \\
+{\em n\+\_\+steps} & the number of steps used to draw your curve. \\
 \hline
-{\em step\+\_\+length} & \\
+{\em step\+\_\+length} & the length/distance taken in each step. \\
 \hline
-{\em d\+\_\+sep} & \\
+{\em d\+\_\+sep} & the \char`\"{}separation distance\char`\"{}, i.\+e., the amount of distance that each curve must be from neighbouring curves. \\
 \hline
-{\em flow\+\_\+field} & \\
+{\em flow\+\_\+field} & a {\ttfamily \mbox{\hyperlink{classlefer_1_1FlowField}{lefer\+::\+Flow\+Field}}} that contains the 2D grid of angle values that define your flow field. \\
 \hline
-{\em density\+\_\+grid} & \\
+{\em density\+\_\+grid} & the density grid to be used by the algorithm, i.\+e., a {\ttfamily \mbox{\hyperlink{classlefer_1_1DensityGrid}{lefer\+::\+Density\+Grid}}} object. \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{namespacelefer_aea61e23cac090b41eedfb4b4b483631b}\label{namespacelefer_aea61e23cac090b41eedfb4b4b483631b}} 
@@ -74,9 +93,61 @@ Draw a curve in the flow field.
 \doxysubsubsection{\texorpdfstring{even\_spaced\_curves()}{even\_spaced\_curves()}}
 {\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classlefer_1_1Curve}{Curve}} $>$ lefer\+::even\+\_\+spaced\+\_\+curves (\begin{DoxyParamCaption}\item[{double}]{x\+\_\+start,  }\item[{double}]{y\+\_\+start,  }\item[{int}]{n\+\_\+curves,  }\item[{int}]{n\+\_\+steps,  }\item[{int}]{min\+\_\+steps\+\_\+allowed,  }\item[{double}]{step\+\_\+length,  }\item[{double}]{d\+\_\+sep,  }\item[{\mbox{\hyperlink{classlefer_1_1FlowField}{Flow\+Field}} $\ast$}]{flow\+\_\+field,  }\item[{\mbox{\hyperlink{classlefer_1_1DensityGrid}{Density\+Grid}} $\ast$}]{density\+\_\+grid }\end{DoxyParamCaption})}
 
+Draws multiple evenly-\/spaced and non-\/overlapping curves in the flow field.
+
+This function takes a starting point ({\ttfamily x\+\_\+start} and {\ttfamily y\+\_\+start}) in the flow field, and draws a initial curve in the flow field. After that, the function starts a loop process, to derivate {\ttfamily n\+\_\+curves -\/ 1} curves from this initial curve. All the curves that are drawn into the field are derived from this initial curve.
+
+In other words, it is not guaranteed that this function will draw exactly {\ttfamily n\+\_\+curves} curves into the field, because, it might not have enough space for {\ttfamily n\+\_\+curves} curves, considering your current settings. The function will attempt to draw as many curves as possible. As long as they are not overlapping each other, and they are not too close to neighbouring curves, the function will continue to draw curves into the field.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x\+\_\+start} & the x coordinate of the starting point of the initial curve. \\
+\hline
+{\em y\+\_\+start} & the y coordinate of the starting point of the initial curve. \\
+\hline
+{\em n\+\_\+curves} & the number of curves that the function will attempt to draw from the initial curve. \\
+\hline
+{\em n\+\_\+steps} & the number of steps that each curve drawn into the field will have. \\
+\hline
+{\em min\+\_\+steps\+\_\+allowed} & the minimum number of steps allowed for a curve. In other words, every curve that is drawn in the field must have at least {\ttfamily min\+\_\+steps\+\_\+allowed} steps. \\
+\hline
+{\em step\+\_\+length} & the length (or distance) taken in each step (usually, you want to set this variable between 1\% and 0.\+1\% of the flow field width. \\
+\hline
+{\em d\+\_\+sep} & the \char`\"{}separation distance\char`\"{}, i.\+e., the amount of distance that each curve must be from neighbouring curves. \\
+\hline
+{\em flow\+\_\+field} & a {\ttfamily \mbox{\hyperlink{classlefer_1_1FlowField}{lefer\+::\+Flow\+Field}}} that contains the 2D grid of angle values that define your flow field. \\
+\hline
+{\em density\+\_\+grid} & the density grid to be used by the algorithm, i.\+e., a {\ttfamily \mbox{\hyperlink{classlefer_1_1DensityGrid}{lefer\+::\+Density\+Grid}}} object. \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{namespacelefer_ab061cf97ccaa1b5105ac39aa2e44073a}\label{namespacelefer_ab061cf97ccaa1b5105ac39aa2e44073a}} 
 \index{lefer@{lefer}!non\_overlapping\_curves@{non\_overlapping\_curves}}
 \index{non\_overlapping\_curves@{non\_overlapping\_curves}!lefer@{lefer}}
 \doxysubsubsection{\texorpdfstring{non\_overlapping\_curves()}{non\_overlapping\_curves()}}
 {\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classlefer_1_1Curve}{Curve}} $>$ lefer\+::non\+\_\+overlapping\+\_\+curves (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{structlefer_1_1Point}{Point}} $>$}]{starting\+\_\+points,  }\item[{int}]{n\+\_\+steps,  }\item[{int}]{min\+\_\+steps\+\_\+allowed,  }\item[{double}]{step\+\_\+length,  }\item[{double}]{d\+\_\+sep,  }\item[{\mbox{\hyperlink{classlefer_1_1FlowField}{Flow\+Field}} $\ast$}]{flow\+\_\+field,  }\item[{\mbox{\hyperlink{classlefer_1_1DensityGrid}{Density\+Grid}} $\ast$}]{density\+\_\+grid }\end{DoxyParamCaption})}
 
+Draws multiple non-\/overlapping curves in the flow field.
+
+While {\ttfamily \mbox{\hyperlink{namespacelefer_aea61e23cac090b41eedfb4b4b483631b}{even\+\_\+spaced\+\_\+curves()}}} checks both the distance from the current curve to neighbouring curves, to ensure an even space between each curve, this function checks only if the current curve is overlapping or not other curves. In other words, you use this function if you care only to draw curves that do not overlap each other.
+
+This function takes a sequence of startings points ({\ttfamily starting\+\_\+points}). For each starting point, this function will attempt to draw a curve from it. So, in this function, you have total control over which points exatly the curves starts from.
+
+It is not guaranteed that this function will draw exactly {\ttfamily n\+\_\+curves} curves into the field, because, it might not have enough space for {\ttfamily n\+\_\+curves} curves, considering your current settings. The function will attempt to draw as many curves as possible. As long as they are not overlapping each other, the function will continue to draw curves into the field.
+
+
+\begin{DoxyParams}{Parameters}
+{\em starting\+\_\+points} & a sequence of {\ttfamily \mbox{\hyperlink{structlefer_1_1Point}{lefer\+::\+Point}}} objects. Each {\ttfamily \mbox{\hyperlink{structlefer_1_1Point}{lefer\+::\+Point}}} object should describe a starting point for a single curve. \\
+\hline
+{\em n\+\_\+steps} & the number of steps that each curve drawn into the field will have. \\
+\hline
+{\em min\+\_\+steps\+\_\+allowed} & the minimum number of steps allowed for a curve. In other words, every curve that is drawn in the field must have at least {\ttfamily min\+\_\+steps\+\_\+allowed} steps. \\
+\hline
+{\em step\+\_\+length} & the length (or distance) taken in each step (usually, you want to set this variable between 1\% and 0.\+1\% of the flow field width. \\
+\hline
+{\em d\+\_\+sep} & the \char`\"{}separation distance\char`\"{}, i.\+e., the amount of distance that each curve must be from neighbouring curves. \\
+\hline
+{\em flow\+\_\+field} & a {\ttfamily \mbox{\hyperlink{classlefer_1_1FlowField}{lefer\+::\+Flow\+Field}}} that contains the 2D grid of angle values that define your flow field. \\
+\hline
+{\em density\+\_\+grid} & the density grid to be used by the algorithm, i.\+e., a {\ttfamily \mbox{\hyperlink{classlefer_1_1DensityGrid}{lefer\+::\+Density\+Grid}}} object. \\
+\hline
+\end{DoxyParams}

@@ -137,6 +137,19 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The constructor for <a class="el" href="classlefer_1_1DensityGrid.html">DensityGrid</a> class</p>
+<p>The Jobard and Lefer algortihm works around a "supporting" 2D grid, called of "density grid". Each cell (or coordinate) in this density grid is responsible for keeping tracking of curves that are already drawn into that specific area of the flow field.</p>
+<p>In the <code>cell_capacity</code> argument, you can specify an amount of space you want to pre-allocate for each cell in the density grid before the algorithm starts to run. This might improve drawstically the performance of the algorithm, because you avoid the need for frequents resizing and reallocation of the <code>std::vector</code> objects that represents each cell.</p>
+<p>In other words, if you pre-allocate enough space for each cell in the density grid, then, the algorithm does not have to spend time resizing the cell every time it hits the maximum capacity for that cell.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">flow_field_width</td><td>the width of the flow field. </td></tr>
+    <tr><td class="paramname">flow_field_height</td><td>the height of the flow field. </td></tr>
+    <tr><td class="paramname">d_sep</td><td>the "separation distance", i.e., the amount of distance that each curve must be from neighbouring curves. </td></tr>
+    <tr><td class="paramname">cell_capacity</td><td>the capacity (or "space") you want to allocate for each cell in the density grid. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

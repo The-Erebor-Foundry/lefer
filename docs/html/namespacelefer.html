@@ -166,6 +166,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Calculate the distance between two points</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x1</td><td>the x coordinate of point 1. </td></tr>
+    <tr><td class="paramname">y1</td><td>the y coordinate of point 1. </td></tr>
+    <tr><td class="paramname">x2</td><td>the x coordinate of point 2. </td></tr>
+    <tr><td class="paramname">y2</td><td>the y coordinate of point 2. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -230,16 +240,19 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Draw a curve in the flow field. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Draw a curve in the flow field.</p>
+<p>This function draws a curve in the flow field by starting in a specific point in the field (<code>x_start</code> and <code>y_start</code>), and then, it starts to walk through the field, by followinf the direction of the angles it encounters in the field.</p>
+<p>For more details check: <a href="https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/en/">https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/en/</a></p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">curve_id</td><td></td></tr>
-    <tr><td class="paramname">x_start</td><td></td></tr>
-    <tr><td class="paramname">y_start</td><td></td></tr>
-    <tr><td class="paramname">n_steps</td><td></td></tr>
-    <tr><td class="paramname">step_length</td><td></td></tr>
-    <tr><td class="paramname">d_sep</td><td></td></tr>
-    <tr><td class="paramname">flow_field</td><td></td></tr>
-    <tr><td class="paramname">density_grid</td><td></td></tr>
+    <tr><td class="paramname">curve_id</td><td>the id of the curve you want to draw. </td></tr>
+    <tr><td class="paramname">x_start</td><td>the x coordinate of the starting point from which the function will start to draw your curve. </td></tr>
+    <tr><td class="paramname">y_start</td><td>the y coordinate of the starting point from which the function will start to draw your curve. </td></tr>
+    <tr><td class="paramname">n_steps</td><td>the number of steps used to draw your curve. </td></tr>
+    <tr><td class="paramname">step_length</td><td>the length/distance taken in each step. </td></tr>
+    <tr><td class="paramname">d_sep</td><td>the "separation distance", i.e., the amount of distance that each curve must be from neighbouring curves. </td></tr>
+    <tr><td class="paramname">flow_field</td><td>a <code><a class="el" href="classlefer_1_1FlowField.html">lefer::FlowField</a></code> that contains the 2D grid of angle values that define your flow field. </td></tr>
+    <tr><td class="paramname">density_grid</td><td>the density grid to be used by the algorithm, i.e., a <code><a class="el" href="classlefer_1_1DensityGrid.html">lefer::DensityGrid</a></code> object. </td></tr>
   </table>
   </dd>
 </dl>
@@ -313,6 +326,23 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Draws multiple evenly-spaced and non-overlapping curves in the flow field.</p>
+<p>This function takes a starting point (<code>x_start</code> and <code>y_start</code>) in the flow field, and draws a initial curve in the flow field. After that, the function starts a loop process, to derivate <code>n_curves - 1</code> curves from this initial curve. All the curves that are drawn into the field are derived from this initial curve.</p>
+<p>In other words, it is not guaranteed that this function will draw exactly <code>n_curves</code> curves into the field, because, it might not have enough space for <code>n_curves</code> curves, considering your current settings. The function will attempt to draw as many curves as possible. As long as they are not overlapping each other, and they are not too close to neighbouring curves, the function will continue to draw curves into the field.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x_start</td><td>the x coordinate of the starting point of the initial curve. </td></tr>
+    <tr><td class="paramname">y_start</td><td>the y coordinate of the starting point of the initial curve. </td></tr>
+    <tr><td class="paramname">n_curves</td><td>the number of curves that the function will attempt to draw from the initial curve. </td></tr>
+    <tr><td class="paramname">n_steps</td><td>the number of steps that each curve drawn into the field will have. </td></tr>
+    <tr><td class="paramname">min_steps_allowed</td><td>the minimum number of steps allowed for a curve. In other words, every curve that is drawn in the field must have at least <code>min_steps_allowed</code> steps. </td></tr>
+    <tr><td class="paramname">step_length</td><td>the length (or distance) taken in each step (usually, you want to set this variable between 1% and 0.1% of the flow field width. </td></tr>
+    <tr><td class="paramname">d_sep</td><td>the "separation distance", i.e., the amount of distance that each curve must be from neighbouring curves. </td></tr>
+    <tr><td class="paramname">flow_field</td><td>a <code><a class="el" href="classlefer_1_1FlowField.html">lefer::FlowField</a></code> that contains the 2D grid of angle values that define your flow field. </td></tr>
+    <tr><td class="paramname">density_grid</td><td>the density grid to be used by the algorithm, i.e., a <code><a class="el" href="classlefer_1_1DensityGrid.html">lefer::DensityGrid</a></code> object. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -371,6 +401,22 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Draws multiple non-overlapping curves in the flow field.</p>
+<p>While <code><a class="el" href="namespacelefer.html#aea61e23cac090b41eedfb4b4b483631b">even_spaced_curves()</a></code> checks both the distance from the current curve to neighbouring curves, to ensure an even space between each curve, this function checks only if the current curve is overlapping or not other curves. In other words, you use this function if you care only to draw curves that do not overlap each other.</p>
+<p>This function takes a sequence of startings points (<code>starting_points</code>). For each starting point, this function will attempt to draw a curve from it. So, in this function, you have total control over which points exatly the curves starts from.</p>
+<p>It is not guaranteed that this function will draw exactly <code>n_curves</code> curves into the field, because, it might not have enough space for <code>n_curves</code> curves, considering your current settings. The function will attempt to draw as many curves as possible. As long as they are not overlapping each other, the function will continue to draw curves into the field.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">starting_points</td><td>a sequence of <code><a class="el" href="structlefer_1_1Point.html">lefer::Point</a></code> objects. Each <code><a class="el" href="structlefer_1_1Point.html">lefer::Point</a></code> object should describe a starting point for a single curve. </td></tr>
+    <tr><td class="paramname">n_steps</td><td>the number of steps that each curve drawn into the field will have. </td></tr>
+    <tr><td class="paramname">min_steps_allowed</td><td>the minimum number of steps allowed for a curve. In other words, every curve that is drawn in the field must have at least <code>min_steps_allowed</code> steps. </td></tr>
+    <tr><td class="paramname">step_length</td><td>the length (or distance) taken in each step (usually, you want to set this variable between 1% and 0.1% of the flow field width. </td></tr>
+    <tr><td class="paramname">d_sep</td><td>the "separation distance", i.e., the amount of distance that each curve must be from neighbouring curves. </td></tr>
+    <tr><td class="paramname">flow_field</td><td>a <code><a class="el" href="classlefer_1_1FlowField.html">lefer::FlowField</a></code> that contains the 2D grid of angle values that define your flow field. </td></tr>
+    <tr><td class="paramname">density_grid</td><td>the density grid to be used by the algorithm, i.e., a <code><a class="el" href="classlefer_1_1DensityGrid.html">lefer::DensityGrid</a></code> object. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

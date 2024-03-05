@@ -34,6 +34,25 @@ bool \mbox{\hyperlink{classlefer_1_1DensityGrid_a7e4121b082470f6cb0eccee43cfa6f5
 \doxysubsubsection{\texorpdfstring{DensityGrid()}{DensityGrid()}}
 {\footnotesize\ttfamily lefer\+::\+Density\+Grid\+::\+Density\+Grid (\begin{DoxyParamCaption}\item[{int}]{flow\+\_\+field\+\_\+width,  }\item[{int}]{flow\+\_\+field\+\_\+height,  }\item[{double}]{d\+\_\+sep,  }\item[{int}]{cell\+\_\+capacity }\end{DoxyParamCaption})}
 
+The constructor for \mbox{\hyperlink{classlefer_1_1DensityGrid}{Density\+Grid}} class
+
+The Jobard and Lefer algortihm works around a \char`\"{}supporting\char`\"{} 2D grid, called of \char`\"{}density grid\char`\"{}. Each cell (or coordinate) in this density grid is responsible for keeping tracking of curves that are already drawn into that specific area of the flow field.
+
+In the {\ttfamily cell\+\_\+capacity} argument, you can specify an amount of space you want to pre-\/allocate for each cell in the density grid before the algorithm starts to run. This might improve drawstically the performance of the algorithm, because you avoid the need for frequents resizing and reallocation of the {\ttfamily std\+::vector} objects that represents each cell.
+
+In other words, if you pre-\/allocate enough space for each cell in the density grid, then, the algorithm does not have to spend time resizing the cell every time it hits the maximum capacity for that cell.
+
+
+\begin{DoxyParams}{Parameters}
+{\em flow\+\_\+field\+\_\+width} & the width of the flow field. \\
+\hline
+{\em flow\+\_\+field\+\_\+height} & the height of the flow field. \\
+\hline
+{\em d\+\_\+sep} & the \char`\"{}separation distance\char`\"{}, i.\+e., the amount of distance that each curve must be from neighbouring curves. \\
+\hline
+{\em cell\+\_\+capacity} & the capacity (or \char`\"{}space\char`\"{}) you want to allocate for each cell in the density grid. \\
+\hline
+\end{DoxyParams}
 
 
 \doxysubsection{Member Function Documentation}

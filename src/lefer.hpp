@@ -26,14 +26,18 @@ struct Point {
 };
 
 
+/** A class that represents a curve
+* 
+*/
 class Curve {
 public:
-	int _curve_id;
-	std::vector<double> _x;
-	std::vector<double> _y;
-	std::vector<int> _direction;
-	std::vector<int> _step_id;
-	int _steps_taken;
+	/** The id that identifies the curve */
+	int _curve_id; 
+	std::vector<double> _x; /** The x coordinates of each point in the curve */
+	std::vector<double> _y; /** The y coordinates of each point in the curve */
+	std::vector<int> _direction; /** The direction id of each point in the curve (0 means direction from left to right, 1 means direction from right to left) */
+	std::vector<int> _step_id; /** The id (or the number) of the step for each point in the curve */
+	int _steps_taken; /** The number of steps taken to draw the curve. */
 public:
 	Curve(int id, int n_steps);
 	void insert_step(double x_coord, double y_coord, int direction_id);
