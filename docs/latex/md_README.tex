@@ -1,1 +1,27 @@
-C++ library for drawing evenly-\/spaced curves in a flow field, using the Jobard and Lefer (1997) algorithm 
+A small C++ library for drawing evenly-\/spaced and non-\/overlapping curves in a flow field (also called of \char`\"{}vector field\char`\"{} in some contexts), using the Jobard and Lefer (1997) algorithm. This algorithm is thoroughly described in a scientific paper (\href{\#references}{\texttt{ Jobard and Lefer 1997}}), but you might find \href{https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/en/index.html}{\texttt{ this article useful too}}.
+
+\hypertarget{md_README_autotoc_md1}{}\doxysection{How to build it?}\label{md_README_autotoc_md1}
+This project is built by CMake. You can build the project by running\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake .}
+\DoxyCodeLine{make}
+
+\end{DoxyCode}
+\hypertarget{md_README_autotoc_md2}{}\doxysection{Calculating curves}\label{md_README_autotoc_md2}
+The functions from this library calculates all coordinates from each curve you want to draw. They make sure that the coordinates from each curves does not collide (or overlap) with the coordinates from other curves.
+
+Very briefly, the idea behind the algorithm, is to draw a curve by walking through the vector field, and constantly check if we are getting to close from neighbouring curves. If we do get too close, then, we stop drawing the current curve, and start to draw a different curve in a different position of the flow field.\hypertarget{md_README_autotoc_md3}{}\doxysection{The main API}\label{md_README_autotoc_md3}
+The core part of the Jobard and Lefer algorithm can be splitted in two parts\+:
+
+
+\begin{DoxyItemize}
+\item Drawing non-\/overlapping curves;
+\item Drawing evenly-\/spaced, and also, non-\/overlapping curves;
+\end{DoxyItemize}
+
+This library offers a single function for each part ({\ttfamily \mbox{\hyperlink{namespacelefer_aea61e23cac090b41eedfb4b4b483631b}{lefer\+::even\+\_\+spaced\+\_\+curves()}}} and {\ttfamily \mbox{\hyperlink{namespacelefer_ab061cf97ccaa1b5105ac39aa2e44073a}{lefer\+::non\+\_\+overlapping\+\_\+curves()}}}). So, if you want to draw curves that do not overlap each other, but you do not care about how much far they are from each other, you probably want to use the {\ttfamily \mbox{\hyperlink{namespacelefer_ab061cf97ccaa1b5105ac39aa2e44073a}{lefer\+::non\+\_\+overlapping\+\_\+curves()}}} function. Otherwise, you use the {\ttfamily \mbox{\hyperlink{namespacelefer_aea61e23cac090b41eedfb4b4b483631b}{lefer\+::even\+\_\+spaced\+\_\+curves()}}}.
+
+Both functions return a {\ttfamily std\+::vector} of {\ttfamily Curve} objects. Each {\ttfamily Curve} object represents a curve that was drawn into the flow field.\hypertarget{md_README_autotoc_md4}{}\doxysubsection{References}\label{md_README_autotoc_md4}
+Jobard, Bruno, and Wilfrid Lefer. 1997. “\+Creating Evenly-\/\+Spaced Streamlines of Arbitrary Density.\+” In Visualization in Scientific Computing ’97, edited by Wilfrid Lefer and Michel Grave, 43–55. Vienna\+: Springer Vienna. 
