@@ -87,8 +87,48 @@ The main API</h1>
 <li>Drawing evenly-spaced, and also, non-overlapping curves;</li>
 </ul>
 <p>This library offers a single function for each part (<code><a class="el" href="namespacelefer.html#aea61e23cac090b41eedfb4b4b483631b">lefer::even_spaced_curves()</a></code> and <code><a class="el" href="namespacelefer.html#ab061cf97ccaa1b5105ac39aa2e44073a">lefer::non_overlapping_curves()</a></code>). So, if you want to draw curves that do not overlap each other, but you do not care about how much far they are from each other, you probably want to use the <code><a class="el" href="namespacelefer.html#ab061cf97ccaa1b5105ac39aa2e44073a">lefer::non_overlapping_curves()</a></code> function. Otherwise, you use the <code><a class="el" href="namespacelefer.html#aea61e23cac090b41eedfb4b4b483631b">lefer::even_spaced_curves()</a></code>.</p>
-<p>Both functions return a <code>std::vector</code> of <code>Curve</code> objects. Each <code>Curve</code> object represents a curve that was drawn into the flow field.</p>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<p>Both functions return a <code>std::vector</code> of <code><a class="el" href="classlefer_1_1Curve.html">lefer::Curve</a></code> objects. Each <code><a class="el" href="classlefer_1_1Curve.html">lefer::Curve</a></code> object represents a curve that was drawn into the flow field.</p>
+<h1><a class="anchor" id="autotoc_md4"></a>
+A minimal example</h1>
+<p>The complete example can be found inside the <code>examples</code> directory of this repository. But just as a minimal example.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> flow_field_width = 120;</div>
+<div class="line"><span class="keywordtype">int</span> flow_field_height = 120;</div>
+<div class="line"><span class="keywordtype">int</span> n_steps = 30;</div>
+<div class="line"><span class="keywordtype">int</span> min_steps_allowed = 5;</div>
+<div class="line"><span class="keywordtype">double</span> step_length = 0.01 * flow_field_width;</div>
+<div class="line"><span class="keywordtype">double</span> d_sep = 0.8;</div>
+<div class="line"><span class="keywordtype">int</span> n_curves = 1500;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">double</span>** flow_field;</div>
+<div class="line">flow_field = (<span class="keywordtype">double</span>**)malloc(<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>*) * flow_field_width);</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i&lt; flow_field_width; i++) {</div>
+<div class="line">    flow_field[i] = (<span class="keywordtype">double</span>*)malloc(<span class="keyword">sizeof</span>(<span class="keywordtype">double</span>) * flow_field_height);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Populate `flow_field` with noise values using any Noise Generator of</span></div>
+<div class="line"><span class="comment">// your preference .... A classic example is to use the Perlin Noise algorithm</span></div>
+<div class="line"><span class="comment">// to create these values.</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code" href="classlefer_1_1FlowField.html">lefer::FlowField</a> flow_field_obj = <a class="code" href="classlefer_1_1FlowField.html">lefer::FlowField</a>(flow_field, flow_field_width);</div>
+<div class="line"><a class="code" href="classlefer_1_1DensityGrid.html">lefer::DensityGrid</a> density_grid = <a class="code" href="classlefer_1_1DensityGrid.html">lefer::DensityGrid</a>(flow_field_width, flow_field_height, d_sep, 2000);</div>
+<div class="line">    </div>
+<div class="line"><span class="keywordtype">double</span> x_start = 45.0;</div>
+<div class="line"><span class="keywordtype">double</span> y_start = 24.0;</div>
+<div class="line">std::vector&lt;lefer::Curve&gt; curves = <a class="code" href="namespacelefer.html#aea61e23cac090b41eedfb4b4b483631b">lefer::even_spaced_curves</a>(</div>
+<div class="line">    x_start,</div>
+<div class="line">    y_start,</div>
+<div class="line">    n_curves,</div>
+<div class="line">    n_steps,</div>
+<div class="line">    min_steps_allowed,</div>
+<div class="line">    step_length,</div>
+<div class="line">    d_sep,</div>
+<div class="line">    &amp;flow_field_obj,</div>
+<div class="line">    &amp;density_grid</div>
+<div class="line">);</div>
+<div class="ttc" id="aclasslefer_1_1DensityGrid_html"><div class="ttname"><a href="classlefer_1_1DensityGrid.html">lefer::DensityGrid</a></div><div class="ttdef"><b>Definition:</b> lefer.hpp:51</div></div>
+<div class="ttc" id="aclasslefer_1_1FlowField_html"><div class="ttname"><a href="classlefer_1_1FlowField.html">lefer::FlowField</a></div><div class="ttdef"><b>Definition:</b> lefer.hpp:10</div></div>
+<div class="ttc" id="anamespacelefer_html_aea61e23cac090b41eedfb4b4b483631b"><div class="ttname"><a href="namespacelefer.html#aea61e23cac090b41eedfb4b4b483631b">lefer::even_spaced_curves</a></div><div class="ttdeci">std::vector&lt; Curve &gt; even_spaced_curves(double x_start, double y_start, int n_curves, int n_steps, int min_steps_allowed, double step_length, double d_sep, FlowField *flow_field, DensityGrid *density_grid)</div><div class="ttdef"><b>Definition:</b> main.cpp:86</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
 References</h2>
 <p>Jobard, Bruno, and Wilfrid Lefer. 1997. “Creating Evenly-Spaced Streamlines of Arbitrary Density.” In Visualization in Scientific Computing ’97, edited by Wilfrid Lefer and Michel Grave, 43–55. Vienna: Springer Vienna. </p>
 </div></div><!-- contents -->

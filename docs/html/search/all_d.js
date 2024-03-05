@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['x_39',['x',['../structlefer_1_1Point.html#ae322b88efe47c8b01808236c6595b313',1,'lefer::Point::x()'],['../structlefer_1_1DensityCell.html#a72bdc9519413f9aa68bda77cba76abb8',1,'lefer::DensityCell::x()']]]
+  ['seedpointsqueue_38',['SeedPointsQueue',['../classlefer_1_1SeedPointsQueue.html',1,'lefer::SeedPointsQueue'],['../classlefer_1_1SeedPointsQueue.html#a6e2d659f4fe2a447db3d06ed94c0a82c',1,'lefer::SeedPointsQueue::SeedPointsQueue()']]],
+  ['space_5fused_39',['space_used',['../structlefer_1_1DensityCell.html#af7e7b51a00257506e8c9db9415c4bf29',1,'lefer::DensityCell']]]
 ];

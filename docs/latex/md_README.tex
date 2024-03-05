@@ -23,5 +23,46 @@ The core part of the Jobard and Lefer algorithm can be splitted in two parts\+:
 
 This library offers a single function for each part ({\ttfamily \mbox{\hyperlink{namespacelefer_aea61e23cac090b41eedfb4b4b483631b}{lefer\+::even\+\_\+spaced\+\_\+curves()}}} and {\ttfamily \mbox{\hyperlink{namespacelefer_ab061cf97ccaa1b5105ac39aa2e44073a}{lefer\+::non\+\_\+overlapping\+\_\+curves()}}}). So, if you want to draw curves that do not overlap each other, but you do not care about how much far they are from each other, you probably want to use the {\ttfamily \mbox{\hyperlink{namespacelefer_ab061cf97ccaa1b5105ac39aa2e44073a}{lefer\+::non\+\_\+overlapping\+\_\+curves()}}} function. Otherwise, you use the {\ttfamily \mbox{\hyperlink{namespacelefer_aea61e23cac090b41eedfb4b4b483631b}{lefer\+::even\+\_\+spaced\+\_\+curves()}}}.
 
-Both functions return a {\ttfamily std\+::vector} of {\ttfamily Curve} objects. Each {\ttfamily Curve} object represents a curve that was drawn into the flow field.\hypertarget{md_README_autotoc_md4}{}\doxysubsection{References}\label{md_README_autotoc_md4}
+Both functions return a {\ttfamily std\+::vector} of {\ttfamily \mbox{\hyperlink{classlefer_1_1Curve}{lefer\+::\+Curve}}} objects. Each {\ttfamily \mbox{\hyperlink{classlefer_1_1Curve}{lefer\+::\+Curve}}} object represents a curve that was drawn into the flow field.\hypertarget{md_README_autotoc_md4}{}\doxysection{A minimal example}\label{md_README_autotoc_md4}
+The complete example can be found inside the {\ttfamily examples} directory of this repository. But just as a minimal example.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} flow\_field\_width = 120;}
+\DoxyCodeLine{\textcolor{keywordtype}{int} flow\_field\_height = 120;}
+\DoxyCodeLine{\textcolor{keywordtype}{int} n\_steps = 30;}
+\DoxyCodeLine{\textcolor{keywordtype}{int} min\_steps\_allowed = 5;}
+\DoxyCodeLine{\textcolor{keywordtype}{double} step\_length = 0.01 * flow\_field\_width;}
+\DoxyCodeLine{\textcolor{keywordtype}{double} d\_sep = 0.8;}
+\DoxyCodeLine{\textcolor{keywordtype}{int} n\_curves = 1500;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{double}** flow\_field;}
+\DoxyCodeLine{flow\_field = (\textcolor{keywordtype}{double}**)malloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}*) * flow\_field\_width);}
+\DoxyCodeLine{\textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i< flow\_field\_width; i++) \{}
+\DoxyCodeLine{    flow\_field[i] = (\textcolor{keywordtype}{double}*)malloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}) * flow\_field\_height);}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{// Populate `flow\_field` with noise values using any Noise Generator of}}
+\DoxyCodeLine{\textcolor{comment}{// your preference .... A classic example is to use the Perlin Noise algorithm}}
+\DoxyCodeLine{\textcolor{comment}{// to create these values.}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{classlefer_1_1FlowField}{lefer::FlowField}} flow\_field\_obj = \mbox{\hyperlink{classlefer_1_1FlowField}{lefer::FlowField}}(flow\_field, flow\_field\_width);}
+\DoxyCodeLine{\mbox{\hyperlink{classlefer_1_1DensityGrid}{lefer::DensityGrid}} density\_grid = \mbox{\hyperlink{classlefer_1_1DensityGrid}{lefer::DensityGrid}}(flow\_field\_width, flow\_field\_height, d\_sep, 2000);}
+\DoxyCodeLine{    }
+\DoxyCodeLine{\textcolor{keywordtype}{double} x\_start = 45.0;}
+\DoxyCodeLine{\textcolor{keywordtype}{double} y\_start = 24.0;}
+\DoxyCodeLine{std::vector<lefer::Curve> curves = \mbox{\hyperlink{namespacelefer_aea61e23cac090b41eedfb4b4b483631b}{lefer::even\_spaced\_curves}}(}
+\DoxyCodeLine{    x\_start,}
+\DoxyCodeLine{    y\_start,}
+\DoxyCodeLine{    n\_curves,}
+\DoxyCodeLine{    n\_steps,}
+\DoxyCodeLine{    min\_steps\_allowed,}
+\DoxyCodeLine{    step\_length,}
+\DoxyCodeLine{    d\_sep,}
+\DoxyCodeLine{    \&flow\_field\_obj,}
+\DoxyCodeLine{    \&density\_grid}
+\DoxyCodeLine{);}
+
+\end{DoxyCode}
+\hypertarget{md_README_autotoc_md5}{}\doxysubsection{References}\label{md_README_autotoc_md5}
 Jobard, Bruno, and Wilfrid Lefer. 1997. “\+Creating Evenly-\/\+Spaced Streamlines of Arbitrary Density.\+” In Visualization in Scientific Computing ’97, edited by Wilfrid Lefer and Michel Grave, 43–55. Vienna\+: Springer Vienna. 

@@ -41,8 +41,51 @@ So, if you want to draw curves that do not overlap each other, but you do not ca
 how much far they are from each other, you probably want to use the `lefer::non_overlapping_curves()` function.
 Otherwise, you use the `lefer::even_spaced_curves()`.
 
-Both functions return a `std::vector` of `Curve` objects. Each `Curve` object represents a curve that
+Both functions return a `std::vector` of `lefer::Curve` objects. Each `lefer::Curve` object represents a curve that
 was drawn into the flow field.
+
+# A minimal example
+
+The complete example can be found inside the `examples` directory of this repository.
+But just as a minimal example.
+
+```cpp
+int flow_field_width = 120;
+int flow_field_height = 120;
+int n_steps = 30;
+int min_steps_allowed = 5;
+double step_length = 0.01 * flow_field_width;
+double d_sep = 0.8;
+int n_curves = 1500;
+
+double** flow_field;
+flow_field = (double**)malloc(sizeof(double*) * flow_field_width);
+for (int i = 0; i< flow_field_width; i++) {
+	flow_field[i] = (double*)malloc(sizeof(double) * flow_field_height);
+}
+
+// Populate `flow_field` with noise values using any Noise Generator of
+// your preference .... A classic example is to use the Perlin Noise algorithm
+// to create these values.
+
+lefer::FlowField flow_field_obj = lefer::FlowField(flow_field, flow_field_width);
+lefer::DensityGrid density_grid = lefer::DensityGrid(flow_field_width, flow_field_height, d_sep, 2000);
+	
+double x_start = 45.0;
+double y_start = 24.0;
+std::vector<lefer::Curve> curves = lefer::even_spaced_curves(
+	x_start,
+	y_start,
+	n_curves,
+	n_steps,
+	min_steps_allowed,
+	step_length,
+	d_sep,
+	&flow_field_obj,
+	&density_grid
+);
+```
+
 
 ## References
 
