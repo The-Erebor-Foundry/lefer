@@ -19,7 +19,7 @@ int main (int argc, char *argv[]) {
 
 	double** flow_field;
 	flow_field = (double**)malloc(sizeof(double*) * flow_field_width);
-	for (int i = 0; i< flow_field_width; i++) {
+	for (int i = 0; i < flow_field_width; i++) {
 		flow_field[i] = (double*)malloc(sizeof(double) * flow_field_height);
 	}
 
@@ -63,6 +63,11 @@ int main (int argc, char *argv[]) {
 				<< std::endl;
 		}
 	}
+	
+	for (int i = 0; i < flow_field_width; i++) {
+		free(flow_field[i]);
+	}
+	free(flow_field);
 
 	return 0;
 }
