@@ -1,0 +1,68 @@
+A small C++ library for drawing evenly-\/spaced and non-\/overlapping curves in a flow field (also called of \char`\"{}vector field\char`\"{} in some contexts), using the Jobard and Lefer (1997) algorithm. This algorithm is thoroughly described in a scientific paper (\href{\#references}{\texttt{ Jobard and Lefer 1997}}), but you might find \href{https://pedro-faria.netlify.app/posts/2024/2024-02-19-flow-even/en/index.html}{\texttt{ this article useful too}}.
+
+\hypertarget{md_README_autotoc_md1}{}\doxysection{How to build it?}\label{md_README_autotoc_md1}
+This project is built by CMake. You can build the project by running\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake .}
+\DoxyCodeLine{make}
+
+\end{DoxyCode}
+\hypertarget{md_README_autotoc_md2}{}\doxysection{Calculating curves}\label{md_README_autotoc_md2}
+The functions from this library calculates all coordinates from each curve you want to draw. They make sure that the coordinates from each curves does not collide (or overlap) with the coordinates from other curves.
+
+Very briefly, the idea behind the algorithm, is to draw a curve by walking through the vector field, and constantly check if we are getting to close from neighbouring curves. If we do get too close, then, we stop drawing the current curve, and start to draw a different curve in a different position of the flow field.\hypertarget{md_README_autotoc_md3}{}\doxysection{The main API}\label{md_README_autotoc_md3}
+The core part of the Jobard and Lefer algorithm can be splitted in two parts\+:
+
+
+\begin{DoxyItemize}
+\item Drawing non-\/overlapping curves;
+\item Drawing evenly-\/spaced, and also, non-\/overlapping curves;
+\end{DoxyItemize}
+
+This library offers a single function for each part ({\ttfamily lefer\+::even\+\_\+spaced\+\_\+curves()} and {\ttfamily lefer\+::non\+\_\+overlapping\+\_\+curves()}). So, if you want to draw curves that do not overlap each other, but you do not care about how much far they are from each other, you probably want to use the {\ttfamily lefer\+::non\+\_\+overlapping\+\_\+curves()} function. Otherwise, you use the {\ttfamily lefer\+::even\+\_\+spaced\+\_\+curves()}.
+
+Both functions return a {\ttfamily std\+::vector} of {\ttfamily lefer\+::\+Curve} objects. Each {\ttfamily lefer\+::\+Curve} object represents a curve that was drawn into the flow field.\hypertarget{md_README_autotoc_md4}{}\doxysection{A minimal example}\label{md_README_autotoc_md4}
+The complete example can be found inside the \href{https://github.com/The-Erebor-Foundry/lefer/tree/main/examples}{\texttt{ {\ttfamily examples}}} directory of this repository. But just as a minimal example.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} flow\_field\_width = 120;}
+\DoxyCodeLine{\textcolor{keywordtype}{int} flow\_field\_height = 120;}
+\DoxyCodeLine{\textcolor{keywordtype}{int} n\_steps = 30;}
+\DoxyCodeLine{\textcolor{keywordtype}{int} min\_steps\_allowed = 5;}
+\DoxyCodeLine{\textcolor{keywordtype}{double} step\_length = 0.01 * flow\_field\_width;}
+\DoxyCodeLine{\textcolor{keywordtype}{double} d\_sep = 0.8;}
+\DoxyCodeLine{\textcolor{keywordtype}{int} n\_curves = 1500;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{double}** flow\_field;}
+\DoxyCodeLine{flow\_field = (\textcolor{keywordtype}{double}**)malloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}*) * flow\_field\_width);}
+\DoxyCodeLine{\textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i< flow\_field\_width; i++) \{}
+\DoxyCodeLine{    flow\_field[i] = (\textcolor{keywordtype}{double}*)malloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}) * flow\_field\_height);}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{// Populate `flow\_field` with noise values using any Noise Generator of}}
+\DoxyCodeLine{\textcolor{comment}{// your preference .... A classic example is to use the Perlin Noise algorithm}}
+\DoxyCodeLine{\textcolor{comment}{// to create these values.}}
+\DoxyCodeLine{}
+\DoxyCodeLine{lefer::FlowField flow\_field\_obj = lefer::FlowField(flow\_field, flow\_field\_width);}
+\DoxyCodeLine{lefer::DensityGrid density\_grid = lefer::DensityGrid(flow\_field\_width, flow\_field\_height, d\_sep, 2000);}
+\DoxyCodeLine{    }
+\DoxyCodeLine{\textcolor{keywordtype}{double} x\_start = 45.0;}
+\DoxyCodeLine{\textcolor{keywordtype}{double} y\_start = 24.0;}
+\DoxyCodeLine{std::vector<lefer::Curve> curves = lefer::even\_spaced\_curves(}
+\DoxyCodeLine{    x\_start,}
+\DoxyCodeLine{    y\_start,}
+\DoxyCodeLine{    n\_curves,}
+\DoxyCodeLine{    n\_steps,}
+\DoxyCodeLine{    min\_steps\_allowed,}
+\DoxyCodeLine{    step\_length,}
+\DoxyCodeLine{    d\_sep,}
+\DoxyCodeLine{    \&flow\_field\_obj,}
+\DoxyCodeLine{    \&density\_grid}
+\DoxyCodeLine{);}
+
+\end{DoxyCode}
+\hypertarget{md_README_autotoc_md5}{}\doxysubsection{References}\label{md_README_autotoc_md5}
+Jobard, Bruno, and Wilfrid Lefer. 1997. “\+Creating Evenly-\/\+Spaced Streamlines of Arbitrary Density.\+” In Visualization in Scientific Computing ’97, edited by Wilfrid Lefer and Michel Grave, 43–55. Vienna\+: Springer Vienna. 
