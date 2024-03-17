@@ -445,13 +445,11 @@ DensityGrid::DensityGrid(int flow_field_width, int flow_field_height, double d_s
 	_width = grid_width;
 	_height = grid_height;
 	_n_elements = grid_width * grid_height;
-	_grid.reserve(grid_width * grid_height);
+	_grid.reserve(_n_elements);
 
 	for (int i = 0; i < _n_elements; i++) {
-		_grid[i].x.reserve(cell_capacity);
-		_grid[i].y.reserve(cell_capacity);
-		_grid[i].capacity = cell_capacity;
-		_grid[i].space_used = 0;
+		DensityCell cell(cell_capacity);
+		_grid.push_back(cell);
 	}
 }
 
@@ -554,11 +552,17 @@ bool DensityGrid::is_valid_next_step(double x, double y) {
 
 
 
+// DensityCell class =============================================================================
+DensityCell::DensityCell(int cell_capacity) {
+	x = std::vector<double>(cell_capacity, 0.0);
+	y = std::vector<double>(cell_capacity, 0.0);
+	capacity = cell_capacity;
+	space_used = 0;
+}
 
 
 
-
-
+ 
 
 
 
