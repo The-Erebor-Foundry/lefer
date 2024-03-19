@@ -493,8 +493,8 @@ void DensityGrid::insert_coord(double x, double y) {
 	int capacity = _grid[density_index].capacity;
 
 	if ((space_used + 1) < capacity) {
-		_grid[density_index].x.emplace_back(x);
-		_grid[density_index].y.emplace_back(y);
+		_grid[density_index].x[space_used] = x;
+		_grid[density_index].y[space_used] = y;
 		_grid[density_index].space_used++;
 	}
 }
