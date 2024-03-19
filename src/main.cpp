@@ -131,7 +131,6 @@ std::vector<Curve> even_spaced_curves(double x_start,
 	curves.reserve(n_curves);
 	double x = x_start;
 	double y = y_start;
-	int curve_array_index = 0;
 	int curve_id = 0;
 	Curve curve = draw_curve(
 		curve_id,
@@ -145,10 +144,8 @@ std::vector<Curve> even_spaced_curves(double x_start,
 
 	curves.emplace_back(curve);
 	density_grid->insert_curve_coords(&curve);
-	curve_array_index++;
 
-
-	while (curve_id < n_curves && curve_array_index < n_curves) {
+	while (curve_id < n_curves && curves.size() < n_curves) {
 		SeedPointsQueue queue = SeedPointsQueue(n_steps);
 		if (curve_id >= curves.size()) {
 			// There is no more curves to be analyzed in the queue
@@ -156,11 +153,14 @@ std::vector<Curve> even_spaced_curves(double x_start,
 		}
 		queue = collect_seedpoints(&curves.at(curve_id), d_sep);
 		for (Point p: queue._points) {
+			if (curves.size() >= n_curves) {
+				break;
+			}
 			// check if it is valid given the current state
 			if (density_grid->is_valid_next_step(p.x, p.y)) {
 				// if it is, draw the curve from it
 				Curve curve = draw_curve(
-					curve_array_index,
+					curves.size(),
 					p.x, p.y,
 					n_steps,
 					step_length,
@@ -176,7 +176,6 @@ std::vector<Curve> even_spaced_curves(double x_start,
 				curves.emplace_back(curve);
 				// insert this new curve into the density grid
 				density_grid->insert_curve_coords(&curve);
-				curve_array_index++;
 			}
 		}
 
